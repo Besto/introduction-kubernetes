@@ -1,27 +1,22 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mariadb
+  name: mysqldb
   labels:
-    app: mariadb
+    app: mysqldb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mariadb
+      app: mysqldb
   template:
     metadata:
       labels:
-        app: mariadb
+        app: mysqldb
     spec:
       containers:
-      - image: mariadb
-        name: mariadb 
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "200m"
+      - image: mysql
+        name: mysql 
         env:
         - name: MYSQL_RANDOM_ROOT_PASSWORD
           value: "yes"
@@ -29,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mariadb
+  name: mysqldb
 spec:
   type: ClusterIP
   ports:
   - port: 3306
   selector:
-    app: mariadb
+    app: mysqldb
